@@ -9,5 +9,4 @@ public class JujuProjectBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JujuProjectBackendApplication.class, args);
 	}
-
 }
