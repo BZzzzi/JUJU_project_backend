@@ -6,11 +6,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
-import lombok.Data;
+import lombok.*;
 
-@Entity
-@Table(name = "events", schema = "events")
+import java.time.LocalDateTime;
+
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "events")
 public class Events {
 
     @Id
@@ -21,10 +26,10 @@ public class Events {
     private String title;
 
     @Column(nullable = false)
-    private String start;
+    private LocalDateTime start;
 
     @Column(nullable = false)
-    private String end;
+    private LocalDateTime end;
 
     @Column(nullable = false)
     private String color;
