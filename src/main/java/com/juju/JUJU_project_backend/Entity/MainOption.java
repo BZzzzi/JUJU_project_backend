@@ -10,13 +10,17 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "optionprofiles")
+@Table(name = "user")
 public class MainOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String email;
     private String username;
+    private String password;
+    private String nickname;
+    private String birthday;
     private String profile_img_name;
     private String profile_img_path;
 }

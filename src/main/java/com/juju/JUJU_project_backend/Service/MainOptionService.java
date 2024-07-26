@@ -52,8 +52,7 @@ public class MainOptionService {
 
             MainOption mainOption = mainOptionRepository.findByUsername(username);
             if (mainOption == null) {
-                mainOption = new MainOption();
-                mainOption.setUsername(username);
+                throw new Exception("유저를 찾을 수 없습니다.");
             }
 
             mainOption.setProfile_img_name(uniqueFileName);
@@ -66,4 +65,20 @@ public class MainOptionService {
             throw new Exception("파일 저장 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
+
+        public MainOption findById(int id) {
+            return mainOptionRepository.findById(id).orElse(null);
+        }
+
+        public MainOption getMainOption(int id) {
+            return mainOptionRepository.findById(id).orElse(null);
+        }
+        public MainOption updateNickname(int id, String nickname) {
+            MainOption mainOption = mainOptionRepository.findById(id).orElse(null);
+            if (mainOption != null) {
+                mainOption.setNickname(nickname);
+                mainOptionRepository.save(mainOption);
+            }
+            return mainOption;
+        }
 }

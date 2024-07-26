@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/profile")
+@RequestMapping("/api")
 @Log4j2
 public class ProfileController {
 
@@ -23,16 +23,18 @@ public class ProfileController {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @PostMapping("/upload")
+    @PostMapping("/uploadProfilePicture")
     public ResponseEntity<?> uploadProfileImg(@RequestPart("profilePicture") MultipartFile file,
-                                              @RequestPart("data") String dataJson){
+                                              @RequestParam("id") int id){
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body(Map.of("error", "파일이 비어 있습니다."));
         }
         try {
-            MainOption data = objectMapper.readValue(dataJson, MainOption.class);
-            String username = data.getUsername();
-            String imageUrl = mainOptionService.updateProfileImg(username, file);
+            MainOption data = mainOptionService.findById(id);
+            if (data == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "유저를 찾을 수 없습니다."));
+            }
+            String imageUrl = mainOptionService.updateProfileImg(data.getUsername(), file);
             return ResponseEntity.ok(Map.of("url", imageUrl));
         } catch (Exception e) {
             log.error("Error uploading profile picture: {}", e.getMessage());
