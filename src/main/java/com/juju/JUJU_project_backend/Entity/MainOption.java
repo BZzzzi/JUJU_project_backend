@@ -10,22 +10,13 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "optionprofile")
+@Table(name = "optionprofiles")
 public class MainOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(nullable = false)
-    private String email_id;
-
-    @Column(nullable = false)
-    private String nickname;
-
-    @Column(nullable = false)
+    private String username;
     private String profile_img_name;
-
-    @Column(nullable = false)
     private String profile_img_path;
 }
