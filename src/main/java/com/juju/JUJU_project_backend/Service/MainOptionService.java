@@ -12,13 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
-@Log4j
 public class MainOptionService {
-
-    @Autowired
-    private MainOptionRepository mainOptionRepository;
-
-    public void profile(MultipartFile file) throws Exception{
-
-    }
+//
+//    @Autowired
+//    private MainOptionRepository mainOptionRepository;
+//
+//    public void profile(MultipartFile file) throws Exception{
+//
+//    }
 }
