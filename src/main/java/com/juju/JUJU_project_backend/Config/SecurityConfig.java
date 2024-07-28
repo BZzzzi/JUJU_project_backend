@@ -22,6 +22,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 
@@ -31,9 +32,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/login").permitAll()
-                                .requestMatchers("/api/changePassword").authenticated()
-                                .anyRequest().permitAll()
+                                .requestMatchers("/api/login", "/api/register").permitAll() // /api/login 및 /api/register는 인증 없이 접근 허용
+                                .requestMatchers("/api/changePassword").authenticated() // /api/changePassword는 인증된 사용자만 접근 허용
+                                .anyRequest().authenticated()
                 )
                 .formLogin(withDefaults());
 
