@@ -10,12 +10,11 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "users")
 public class MainOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     private String email;
     private String username;
     private String password;
