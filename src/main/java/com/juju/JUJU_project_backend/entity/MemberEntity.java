@@ -1,5 +1,6 @@
 package com.juju.JUJU_project_backend.entity;
 
+import com.juju.JUJU_project_backend.dto.MemberDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,7 @@ public class MemberEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Column
-    private String name;
+    private String username;
 
     @Column
     private String nickname;
@@ -26,4 +27,14 @@ public class MemberEntity {
 
     @Column
     private String birthday;
+
+    public static MemberEntity toMemberEntity(MemberDTO memberDTO) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setUsername(memberDTO.getUsername());
+        memberEntity.setNickname(memberDTO.getNickname());
+        memberEntity.setEmail(memberDTO.getEmail());
+        memberEntity.setPassword(memberDTO.getPassword());
+        memberEntity.setBirthday(memberEntity.getBirthday());
+        return memberEntity;
+    }
 }
