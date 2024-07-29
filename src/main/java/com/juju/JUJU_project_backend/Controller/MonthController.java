@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@RequestMapping("/api")
+@RequestMapping("/api/todo")
 @RestController
 @Log4j2
 public class MonthController {
@@ -29,7 +29,7 @@ public class MonthController {
         this.eventsService = eventsService;
     }
 
-    @GetMapping("/event")
+    @GetMapping
     public List<EventsDto> monthPlan() {
         List<Events> eventsAll = eventsService.getAllEvents();
         return eventsAll.stream()
@@ -37,20 +37,20 @@ public class MonthController {
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/event")
+    @PostMapping
     public EventsDto addEvent(@RequestBody EventsDto eventDto) {
         Events event = EventsConverter.toEntity(eventDto);
         Events savedEvent = eventsService.addEvent(event);
         return EventsConverter.toDto(savedEvent);
     }
 
-    @PutMapping("/event/{id}")
+    @PutMapping("/{id}")
     public EventsDto updateEvent(@PathVariable int id, @RequestBody EventsDto eventDto) {
         Events updatedEvent = eventsService.updateEvent(id, eventDto);
         return EventsConverter.toDto(updatedEvent);
     }
 
-    @DeleteMapping("/event/{id}")
+    @DeleteMapping("/{id}")
     public void deleteEvent(@PathVariable int id){
         eventsService.deleteEvent(id);
     }
