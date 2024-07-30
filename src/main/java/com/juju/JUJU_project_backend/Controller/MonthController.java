@@ -1,9 +1,9 @@
-package com.juju.JUJU_project_backend.Controller;
+package com.juju.JUJU_project_backend.controller;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.juju.JUJU_project_backend.DTO.EventsDto;
-import com.juju.JUJU_project_backend.Entity.Events;
-import com.juju.JUJU_project_backend.Service.EventsService;
+import com.juju.JUJU_project_backend.dto.EventsDto;
+import com.juju.JUJU_project_backend.entity.Events;
+import com.juju.JUJU_project_backend.service.EventsService;
 import com.juju.JUJU_project_backend.Util.EventsConverter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

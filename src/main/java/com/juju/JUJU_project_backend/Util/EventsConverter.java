@@ -1,7 +1,7 @@
 package com.juju.JUJU_project_backend.Util;
 
-import com.juju.JUJU_project_backend.DTO.EventsDto;
-import com.juju.JUJU_project_backend.Entity.Events;
+import com.juju.JUJU_project_backend.dto.EventsDto;
+import com.juju.JUJU_project_backend.entity.Events;
 
 public class EventsConverter {
     public static EventsDto toDto(Events event) {

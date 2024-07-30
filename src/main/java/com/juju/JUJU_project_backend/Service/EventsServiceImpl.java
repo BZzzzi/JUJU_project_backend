@@ -1,8 +1,8 @@
-package com.juju.JUJU_project_backend.Service;
+package com.juju.JUJU_project_backend.service;
 
-import com.juju.JUJU_project_backend.DTO.EventsDto;
-import com.juju.JUJU_project_backend.Entity.Events;
-import com.juju.JUJU_project_backend.Repository.EventsRepository;
+import com.juju.JUJU_project_backend.dto.EventsDto;
+import com.juju.JUJU_project_backend.entity.Events;
+import com.juju.JUJU_project_backend.repository.EventsRepository;
 import jakarta.transaction.Transactional;
 import jdk.jfr.Event;
 import lombok.extern.log4j.Log4j2;

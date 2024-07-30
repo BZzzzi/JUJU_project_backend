@@ -1,8 +1,8 @@
-package com.juju.JUJU_project_backend.Service;
+package com.juju.JUJU_project_backend.service;
 
 
-import com.juju.JUJU_project_backend.DTO.EventsDto;
-import com.juju.JUJU_project_backend.Entity.Events;
+import com.juju.JUJU_project_backend.dto.EventsDto;
+import com.juju.JUJU_project_backend.entity.Events;
 import jdk.jfr.Event;
 
 import java.util.List;

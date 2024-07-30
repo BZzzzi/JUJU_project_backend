@@ -1,4 +1,4 @@
-package com.juju.JUJU_project_backend.Entity;
+package com.juju.JUJU_project_backend.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

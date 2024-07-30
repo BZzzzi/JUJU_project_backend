@@ -1,6 +1,6 @@
-package com.juju.JUJU_project_backend.Repository;
+package com.juju.JUJU_project_backend.repository;
 
-import com.juju.JUJU_project_backend.Entity.Events;
+import com.juju.JUJU_project_backend.entity.Events;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

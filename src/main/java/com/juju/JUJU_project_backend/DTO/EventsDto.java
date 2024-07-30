@@ -1,6 +1,6 @@
-package com.juju.JUJU_project_backend.DTO;
+package com.juju.JUJU_project_backend.dto;
 
-import com.juju.JUJU_project_backend.Entity.Events;
+import com.juju.JUJU_project_backend.entity.Events;
 import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Getter;
