@@ -12,24 +12,21 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
-public class MainOption {
+@Table(name = "token")
+public class Token {
 
     @Id
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
     private String username;
-
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
     private String nickname;
-
-    @Column(nullable = false)
+    private String password;
     private LocalDate birthday;
-    private String profile_img_name;
-    private String profile_img_path;
+
+    @Column(name = "email_verified", nullable = false)
+    private boolean emailVerified = false;
+
+    @Column(name = "verification_token")
+    private String verificationToken;
 }

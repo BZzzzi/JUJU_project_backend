@@ -16,12 +16,7 @@ public class NicknameController {
     @Autowired
     private NicknameService nicknameService;
 
-    @GetMapping("/{email}")
-    public MainOption getMainOption(@PathVariable("email") String email) {
-        return nicknameService.getMainOption(email);
-    }
-
-    @PutMapping("/{email}/nickname") // http://localhost:8080/api/email/nickname?nickname=새로운닉네임
+    @PutMapping("/changeNickname") //
     public MainOption updateNickname(@PathVariable("email") String email, @RequestBody NicknameDto nicknameDto) {
         return nicknameService.updateNickname(email, nicknameDto.getNickname());
     }

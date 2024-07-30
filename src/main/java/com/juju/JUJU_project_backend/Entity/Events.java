@@ -17,8 +17,7 @@ import java.time.LocalDateTime;
 public class Events {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String email;
 
     @Column(nullable = false)
     private String title;

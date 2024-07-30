@@ -7,7 +7,8 @@ import lombok.Setter;
 @Setter
 public class LoginResponseDto {
     private String email;
-    private String username;
+    private String fullName;
     private String nickname;
-    private String profileImgPath;
+    private String password;
+    private String birthDate;
 }

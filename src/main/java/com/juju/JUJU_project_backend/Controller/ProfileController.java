@@ -1,6 +1,5 @@
 package com.juju.JUJU_project_backend.Controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juju.JUJU_project_backend.DTO.ProfileDto;
 import com.juju.JUJU_project_backend.Entity.MainOption;
 import com.juju.JUJU_project_backend.Service.ProfileService;
@@ -21,21 +20,13 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @PostMapping("/uploadProfilePicture")
     public ResponseEntity<?> uploadProfileImg(@RequestPart("profilePicture") MultipartFile file,
                                               @RequestParam("email") String email){
-        if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "파일이 비어 있습니다."));
-        }
+        log.info("Received request to upload profile picture for email: {}", email);
         try {
-            MainOption data = profileService.findByEmail(email);
-            if (data == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "유저를 찾을 수 없습니다."));
-            }
             ProfileDto profileDto = profileService.updateProfileImg(email, file);
+            log.info("Profile picture updated successfully for email: {}", email);
             return ResponseEntity.ok(profileDto);
         } catch (Exception e) {
             log.error("Error uploading profile picture: {}", e.getMessage());

@@ -23,30 +23,38 @@ public class MonthController {
         this.eventsService = eventsService;
     }
 
-    @GetMapping("/event/{id}")
-    public List<EventsDto> monthPlan() {
-        List<Events> eventsAll = eventsService.getAllEvents();
-        return eventsAll.stream()
+    @GetMapping("/todo")
+    public List<EventsDto> monthPlan(@CookieValue(name = "userEmail", required = false) String cookieEmail,
+                                     @RequestParam(name = "email", required = false) String email) {
+        // 쿠키에서 이메일을 가져오거나, 없으면 파라미터에서 가져옵니다.
+        String userEmail = cookieEmail != null ? cookieEmail : email;
+
+        if (userEmail == null || userEmail.isEmpty()) {
+            throw new IllegalArgumentException("User email is required");
+        }
+        List<Events> eventsByEmail = eventsService.getEventsByEmail(userEmail);
+        return eventsByEmail.stream()
                 .map(EventsConverter::toDto)
                 .collect(Collectors.toList());
     }
 
-    @PostMapping("/event/add/{id}")
-    public EventsDto addEvent(@RequestBody EventsDto eventDto) {
+    @PostMapping("/todo/add")
+    public EventsDto addEvent(@RequestBody EventsDto eventDto, @CookieValue(name = "userEmail") String email) {
         Events event = EventsConverter.toEntity(eventDto);
+        event.setEmail(email);
         Events savedEvent = eventsService.addEvent(event);
         return EventsConverter.toDto(savedEvent);
     }
 
-    @PutMapping("/event/update/{id}")
-    public EventsDto updateEvent(@PathVariable int id, @RequestBody EventsDto eventDto) {
-        Events updatedEvent = eventsService.updateEvent(id, eventDto);
+    @PutMapping("/todo/update")
+    public EventsDto updateEvent(@RequestBody EventsDto eventDto, @CookieValue(name = "userEmail") String email) {
+        Events updatedEvent = eventsService.updateEvent(email, eventDto);
         return EventsConverter.toDto(updatedEvent);
     }
 
-    @DeleteMapping("/event/delete/{id}")
-    public void deleteEvent(@PathVariable int id){
-        eventsService.deleteEvent(id);
+    @DeleteMapping("/todo/delete")
+    public void deleteEvent(@RequestBody EventsDto eventDto, @CookieValue(name = "userEmail") String email) {
+        eventsService.deleteEvent(email, eventDto.getTitle());
     }
 
 }

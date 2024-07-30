@@ -22,7 +22,7 @@ public class PasswordService {
     private PasswordEncoder passwordEncoder;
 
     public void changePassword(String email, PasswordChangeDto passwordChangeDto) {
-        MainOption user = mainOptionRepository.findByEmail(email)
+        MainOption user = mainOptionRepository.findByEmailIgnoreCase(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         if (!passwordEncoder.matches(passwordChangeDto.getCurrentPassword(), user.getPassword())) {

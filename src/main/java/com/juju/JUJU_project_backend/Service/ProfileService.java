@@ -31,38 +31,39 @@ public class ProfileService {
     private String uploadDir;
 
     public ProfileDto updateProfileImg(String email, MultipartFile file) throws Exception {
+        if (file == null || file.isEmpty()) {
+            throw new Exception("파일이 비어 있습니다.");
+        }
 
-        System.out.println("Upload directory: " + uploadDir);
+        Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        if (fileName.contains("..")) {
+            throw new Exception("파일 이름에 유효하지 않은 경로 시퀀스가 포함되어 있습니다: " + fileName);
+        }
 
         try {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
             String uniqueFileName = UUID.randomUUID().toString() + "_" + fileName;
-
-            Path uploadPath = Paths.get(uploadDir).toAbsolutePath().normalize();
-//          Path uploadPath = Paths.get("src/main/resources/static/file");
-
-            if (!Files.exists(uploadPath)) {
-                Files.createDirectories(uploadPath);
-            }
-
             Path filePath = uploadPath.resolve(uniqueFileName);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-            Optional<MainOption> mainOption = mainOptionRepository.findByEmail(email);
-            if (mainOption.isEmpty()) {
-                throw new Exception("유저를 찾을 수 없습니다.");
-            }
+            MainOption mainOption = mainOptionRepository.findByEmailIgnoreCase(email)
+                    .orElseThrow(() -> new Exception("유저를 찾을 수 없습니다."));
 
-            MainOption user = mainOption.get();
-            user.setProfile_img_name(uniqueFileName);
-            String imageUrl = "http://localhost:8080/file/" + uniqueFileName; // URL 경로 설정
-            user.setProfile_img_path(imageUrl);
-            mainOptionRepository.save(user);
+            mainOption.setProfile_img_name(uniqueFileName);
+            String imageUrl = "/file/" + uniqueFileName; // URL 경로 설정
+            mainOption.setProfile_img_path(imageUrl);
+            mainOptionRepository.save(mainOption);
 
             ProfileDto profileDto = new ProfileDto();
-            profileDto.setEmail(user.getEmail());
-            profileDto.setProfileImgName(user.getProfile_img_name());
-            profileDto.setProfileImgPath(user.getProfile_img_path());
+            profileDto.setEmail(mainOption.getEmail());
+            profileDto.setProfileImgName(mainOption.getProfile_img_name());
+            profileDto.setProfileImgPath(mainOption.getProfile_img_path());
 
             return profileDto;
         } catch (IOException e) {
@@ -70,6 +71,6 @@ public class ProfileService {
         }
     }
     public MainOption findByEmail(String email) {
-        return mainOptionRepository.findByEmail(email).orElse(null);
+        return mainOptionRepository.findByEmailIgnoreCase(email).orElse(null);
     }
 }

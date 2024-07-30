@@ -29,28 +29,33 @@ public class EventsServiceImpl implements EventsService{
     }
 
     @Override
+    public List<Events> getEventsByEmail(String email) {
+        return eventsRepository.findByEmail(email);
+    }
+
+    @Override
     public Events addEvent(Events events) {
         return eventsRepository.save(events);
     }
 
     @Override
-    public void deleteEvent(int id) {
-        eventsRepository.deleteById(id);
+    public void deleteEvent(String email, String title) {
+        Optional<Events> event = eventsRepository.findByEmailAndTitle(email, title);
+        event.ifPresent(eventsRepository::delete);
     }
 
     @Override
-    public Events updateEvent(int id, EventsDto eventDto) {
-        Optional<Events> optionalEvent = eventsRepository.findById(id);
+    public Events updateEvent(String email, EventsDto eventDto) {
+        Optional<Events> optionalEvent = eventsRepository.findByEmailAndTitle(email, eventDto.getTitle());
 
         if (optionalEvent.isPresent()) {
             Events event = optionalEvent.get();
-            event.setTitle(eventDto.getTitle());
             event.setStart(eventDto.getStart());
             event.setEnd(eventDto.getEnd());
             event.setColor(eventDto.getColor());
             return eventsRepository.save(event);
         } else {
-            throw new RuntimeException("ID를 찾지 못함 : " + id);
+            throw new RuntimeException("유저를 찾지 못함 : " + email);
         }
     }
 }

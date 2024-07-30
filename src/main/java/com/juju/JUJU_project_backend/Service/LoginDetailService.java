@@ -1,7 +1,7 @@
 package com.juju.JUJU_project_backend.Service;
 
-import com.juju.JUJU_project_backend.Entity.MainOption;
-import com.juju.JUJU_project_backend.Repository.MainOptionRepository;
+import com.juju.JUJU_project_backend.Entity.Token;
+import com.juju.JUJU_project_backend.Repository.TokenRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -14,16 +14,16 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class LoginDetailService implements UserDetailsService {
     @Autowired
-    private MainOptionRepository mainOptionRepository;
+    private TokenRepository tokenRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        MainOption user = mainOptionRepository.findByEmail(email)
+        Token token = tokenRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
         return User.builder()
-                .username(user.getEmail())
-                .password(user.getPassword())
+                .username(token.getEmail())
+                .password(token.getPassword())
                 .roles("USER")
                 .build();
     }

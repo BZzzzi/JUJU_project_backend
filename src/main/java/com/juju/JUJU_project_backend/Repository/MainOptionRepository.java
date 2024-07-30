@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface MainOptionRepository extends JpaRepository<MainOption, String>{
-    Optional<MainOption> findByEmail(String email);
+    Optional<MainOption> findByEmailIgnoreCase(String email);
 }
